@@ -1,34 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="./assets/css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="./assets/css/cadastro.css">
+
 </head>
 <body>
-  <div class="login">
-    <img class="img-fundo" src="./assets/img/Background_Homepage.png" alt="Imagem de fundo">
-    <div class="box-titulo">
-      <a href="./index.html"><img class="img-logo" src="./assets/img/Lime_Logo.png" alt="Logo Green.Go"></a>
-    </div>
-    <div class="box-login">
-      <form action="./home.html" method="get">
-        <div class="input-login">
-          <img class="img-login" src="./assets/img/LimeButton_Login.png" alt="Ícone Login">
-          <input type="text" id="usuario-login" name="usuario-login" placeholder="email/cpf">
+<section class="section">
+
+
+    <div class = 'grid'>
+        <form class = 'input-content' for="">
+
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" name="nome" placeholder="ex:João da Silva">
+
+            <label for="data">Data de Nascimento</label>
+            <input type="text" id="data" name="data" placeholder="DD/MM/AAAA">
+
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" placeholder="ex:13421895-35">
+
+            <label for="contato">Celular</label>
+            <input type="text" id="contato" name="contato" placeholder="ex:(64)99205-5698">
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="ex:nicolas.nogueira@puccampinas.edu.br">
+
+            <label for="email">Senha</label>
+            <input type="text" id="Senha" name="Senha" placeholder="********">
+
+            <label for="confirmar-senha">Confirmar Senha</label>
+            <input type="text" id="confirmar-senha" name="confirmar-senha" placeholder="********">
+
+            <button type="submit">Enviar</button>
+        </form>
+
+        <div class = 'perfil-content'>
+            <img class="logo" src="/assets/img/Lime_Logo.png">
         </div>
-        <input type="password" id="usuario-senha" name="usuario-senha" placeholder="senha">
-        <input type="password-confirm" id="usuario-senha" name="usuario-senha-confirmar" placeholder="confirme sua senha">
-        <a href="#">esqueci a senha</a>
-        
-        <button type="submit" class="botao-enviar">Entrar</button>
-
-      </form>
-
-      <a href="login.html" class="cadastrar">Login</a>
     </div>
-  </div>
-  
+</section>
+           
 </body>
 </html>

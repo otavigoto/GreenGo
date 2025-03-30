@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/transporte.css">
+    <link rel="stylesheet" href="./assets/css/residuos.css">
     <link rel="stylesheet" href="./assets/css/base.css">
 </head>
 <body class="agua">
@@ -41,13 +41,13 @@
     
     </aside>
     
-    <section class="section transporte-bg">
+    <section class="section residuos-bg">
         <div class="grid">
             <div class="grafico-container">
                 <canvas id="grafico" class="grafico"></canvas>
             </div>
             <div class="categoria-container">
-                <h1>Transporte</h1>
+                <h1>Resíduos</h1>
                 <p>Indice: A</p>
             </div>
         </div>
@@ -82,16 +82,16 @@
       data: {
         labels: ['03/17', '03/18', '03/19', '03/20'],
         datasets: [{
-          label: 'Uso de transportes',
-          data: [1, 2, 3, 2],
-          backgroundColor: ['red', 'yellow', 'green', 'yellow']
+          label: 'Geração de lixo reciclável',
+          data: [10, 27, 54, 40],
+          backgroundColor: ['red', 'orange', 'green', 'yellow']
         }]
       },
       options: {
         scales: {
           y: {
             beginAtZero: true,
-            max: 3
+            max: 50
           }
         }
       }

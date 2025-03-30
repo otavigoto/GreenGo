@@ -4,23 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Histórico</title>
-    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="./assets/css/formulario.css">
-    <link rel="stylesheet" href="./assets/css/hitorico.css">
+    <link rel="stylesheet" href="./assets/css/historico.css">
 </head>
 <body>
-    <input type="checkbox" id="menu-input" name="menu-input" checked>
-    <nav class="menu">
-      <label class="label-img-menu" for="menu-input">
-        <img class="img-menu" src="./assets/img/IconMenu_LimeGreen.png" alt="Menu">
-      </label>
-      <ul>
-        <li class="opt-menu"><a href="#">Home</a></li>
-        <li class="opt-menu"><a href="#">Sobre</a></li>
-        <a href="home.html"><img class="menu-img-logo" src="./assets/img/Lime_Logo_Nav.png"></a>
-        <li class="direita"><a href="#">André Mendeleck</a></li>
-      </ul>
-    </nav>
+    <aside class="menu black-bg">
+        <a href="#"><h1><img class="logo-menu" src="./assets/img/Lime_Logo.png" alt="Logo amarela da Green.Go"></h1></a>
+        <div class="main-content menu-content">
+          <div class="menu-content">
+            <input type="checkbox" id="menu-input" name="menu-input" class="menu-input">
+            <label class="label-img-menu" for="menu-input"><img class="img-menu" src="./assets/img/IconMenu_LimeGreen.png" alt="Imagem Menu"></label>
+    
+            <nav>
+    
+              <ul>
+                <li><a class="menu-text opt-menu" href="#">Intro</a></li>
+                <li><a class="menu-text opt-menu" href="#sobre-page">Sobre</a></li>
+                <li><a class="menu-text opt-menu" href="#outro-page">Outro</a></li>
+              </ul>
+              
+            </nav>
+    
+          </div>
+    
+          <div class="direita">
+            <a class="menu-text" href="./perfil.html">Perfil</a>
+            <a href="./perfil.html"><img class="menu-text-image" src="./assets/img/User_icon.jpg"></a>
+          </div>
+         
+        </div>
+    
+    </aside>
 
     <div class="historico-container">
         <div class="box-esquerda">

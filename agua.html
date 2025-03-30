@@ -4,31 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="./assets/css/formulario.css">
-    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/agua.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
 </head>
 <body class="agua">
-    <input type="checkbox" id="menu-input" name="menu-input" checked>
-    <nav class="menu">
-        <label class="label-img-menu" for="menu-input"><img class="img-menu" src="./assets/img/IconMenu_LimeGreen.png" alt="Imagem Menu"></label>
-        <ul>
-            <li class="opt-menu"><a href="#principal">Home</a></li>
-            <li class="opt-menu"><a href="#sobre-page">Sobre</a></li>
-            <a href="home.html"><img class="menu-img-logo" src="./assets/img/Lime_Logo_Nav.png"></a>
-            <li class="direita"><a href="./login.html">Nome usuário</a></li>
-        </ul>
-    </nav>
-    <div class="fundo">
-        <div class="esquerda">
-            <form class="info-transporte">
-                <input type="text" class="distancia" placeholder="Medição inicial do hidrometro"><br>
-                <input type="text" class="time" placeholder="Medição final do hidrometro"><br>
-                <input type="date" class="data" placeholder="DD/MM/AAAA"><br>
-                <button type="submit">Enviar</button>
-            </form>
+    <aside class="menu black-bg">
+        <a href="./home.html#"><h1><img class="logo-menu" src="./assets/img/Lime_Logo.png" alt="Logo amarela da Green.Go"></h1></a>
+        <div class="main-content menu-content">
+          <div class="menu-content">
+            <input type="checkbox" id="menu-input" name="menu-input" class="menu-input">
+            <label class="label-img-menu" for="menu-input"><img class="img-menu" src="./assets/img/IconMenu_LimeGreen.png" alt="Imagem Menu"></label>
+    
+            <nav>
+              <ul>
+                <li><a class="menu-text opt-menu" href="./home.html#">Indice</a></li>
+                <li><a class="menu-text opt-menu" href="./home.html#dicas-page">Dicas</a></li>
+                <li><a class="menu-text opt-menu" href="./home.html#inserir-page">Inserir</a></li>
+                <li><a class="menu-text opt-menu" href="./home.html#historico-page">Historico</a></li>
+              </ul>
+            </nav>
+    
+          </div>
+    
+          <div class="direita">
+            <a class="menu-text" href="./perfil.html">Perfil</a>
+            <a href="./perfil.html"><img class="menu-text-image" src="./assets/img/User_icon.jpg"></a>
+          </div>
+         
         </div>
-        <div class="direita">
-            <h2>Consumo <br>De Água</h2>
+    
+    </aside>
+    
+    <section class="section agua-bg">
+        <div class="grid">
+            <div class="grafico-container">
+                <canvas id="grafico" class="grafico"></canvas>
+            </div>
+            <div class="categoria-container">
+                <h1>Água</h1>
+                <p>Indice: B</p>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <footer class="rodape black-bg">
+        <div>
+            <h2>Contato</h2>
+            <a href="#">Green.Go@gmail.com</a>
+            <a href="#">@Green.Go</a>
+        </div>
+        <div>
+            <h2>Redes Sociais</h2>
+            <a href="#">X</a>
+            <a href="#">Instagram</a>
+            <a href="#">TikTok</a>
+            <a href="#">Youtube</a>
+        </div>
+        <div>
+            <h2>Minha Conta</h2>
+            <a href="./home.html#">Indice</a>
+            <a href="./home.html#dicas-page">Dicas</a>
+            <a href="./perfil.html">Perfil</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const ctx = document.getElementById('grafico').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['03/17', '03/18', '03/19', '03/20'],
+        datasets: [{
+          label: 'Gasto de água',
+          data: [120, 100, 180, 250],
+          backgroundColor: ['yellow', 'green', 'orange', 'red']
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 200
+          }
+        }
+      }
+    });
+    </script>
 </body>
