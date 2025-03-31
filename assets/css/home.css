@@ -92,10 +92,14 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1.5fr 1fr;
-    background-color: rgb(50,50,50);
+    background-image: url(../img/Fundo_Login.png);
+    background-position: left;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .form-container {
+    background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -132,7 +136,7 @@
 }
 
 .text-container {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -143,8 +147,7 @@
 
 .text-container h2{
     font-size: 80px;
-    color: var(--secondary-color);
-    text-shadow: 0 0 30px black;
+    color: var(--primary-color);
     text-align: center;
 }
 

@@ -89,9 +89,29 @@
       },
       options: {
         scales: {
+          x: {
+            ticks:{
+              color: 'yellow'
+            }
+          },
           y: {
             beginAtZero: true,
-            max: 3
+            max: 3,
+            ticks:{
+              color: 'yellow'
+            }
+          }
+        },
+        plugins:{
+          data:{
+            labels:{
+              color: 'yellow'
+            }
+          },
+          legend:{
+            labels:{
+              color: 'yellow'
+            }
           }
         }
       }
