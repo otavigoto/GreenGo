@@ -44,7 +44,15 @@
     <section class="section agua-bg">
         <div class="grid">
             <div class="grafico-container">
-                <canvas id="grafico" class="grafico"></canvas>
+              <select id="periodo" onchange="atualizarGrafico()">
+                <option value="7dias">7 dias</option>
+                <option value="30dias">30 dias</option>
+                <option value="6meses">6 meses</option>
+                <option value="1ano">1 ano</option>
+              </select>
+
+              <canvas id="grafico"></canvas>
+              
             </div>
             <div class="categoria-container">
                 <h1>Água</h1>
@@ -75,46 +83,87 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    const ctx = document.getElementById('grafico').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['03/17', '03/18', '03/19', '03/20'],
-        datasets: [{
-          label: 'Gasto de água',
-          data: [120, 100, 180, 250],
-          backgroundColor: ['yellow', 'green', 'orange', 'red']
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            ticks:{
-              color: 'yellow'
-            }
-          },
-          y: {
-            beginAtZero: true,
-            max: 200,
-            ticks:{
-              color: 'yellow'
-            }
+<script>
+let meuGrafico;
+
+// Função para criar/atualizar o gráfico
+function atualizarGrafico() {
+  const periodo = document.getElementById('periodo').value;
+  let dados;
+  let rotulos;
+  
+  // Dados de exemplo para diferentes períodos
+  switch(periodo) {
+    case '7dias':
+      rotulos = ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4', 'Dia 5', 'Dia 6', 'Dia 7'];
+      dados = [120, 100, 180, 250, 150, 200, 170];
+      break;
+    case '30dias':
+      rotulos = Array.from({length: 30}, (_, i) => `Dia ${i+1}`);
+      dados = Array.from({length: 30}, () => Math.floor(Math.random() * 200) + 50);
+      break;
+    case '6meses':
+      rotulos = ['Mês 1', 'Mês 2', 'Mês 3', 'Mês 4', 'Mês 5', 'Mês 6'];
+      dados = [800, 950, 1100, 900, 1200, 1050];
+      break;
+    case '1ano':
+      rotulos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      dados = [3000, 3200, 3500, 3400, 3600, 3800, 4000, 3900, 3700, 3500, 3300, 3400];
+      break;
+  }
+  
+  const ctx = document.getElementById('grafico').getContext('2d');
+  
+  // Se o gráfico já existe, destrua-o antes de criar um novo
+  if (meuGrafico) {
+    meuGrafico.destroy();
+  }
+  
+  // Crie um novo gráfico
+  meuGrafico = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: rotulos,
+      datasets: [{
+        label: `Gasto de água - ${document.getElementById('periodo').options[document.getElementById('periodo').selectedIndex].text}`,
+        data: dados,
+        backgroundColor: Array.from({length: dados.length}, (_, i) => {
+          const valor = dados[i];
+          if (valor > 200) return 'red';
+          if (valor > 150) return 'orange';
+          if (valor > 100) return 'yellow';
+          return 'green';
+        })
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          ticks: {
+            color: 'yellow'
           }
         },
-        plugins:{
-          data:{
-            labels:{
-              color: 'yellow'
-            }
-          },
-          legend:{
-            labels:{
-              color: 'yellow'
-            }
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: 'yellow'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: 'yellow'
           }
         }
       }
-    });
-    </script>
+    }
+  });
+}
+
+// Inicialize o gráfico quando a página carregar
+window.onload = function() {
+  atualizarGrafico();
+};
+</script>
 </body>

@@ -44,7 +44,13 @@
     <section class="section transporte-bg">
         <div class="grid">
             <div class="grafico-container">
-                <canvas id="grafico" class="grafico"></canvas>
+              <select id="periodoTransporte" onchange="atualizarGraficoTransporte()">
+                <option value="7dias">7 dias</option>
+                <option value="30dias">30 dias</option>
+                <option value="6meses">6 meses</option>
+                <option value="1ano">1 ano</option>
+              </select>
+                <canvas id="graficoTransporte" class="graficoTransporte"></canvas>
             </div>
             <div class="categoria-container">
                 <h1>Transporte</h1>
@@ -74,47 +80,104 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    const ctx = document.getElementById('grafico').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['03/17', '03/18', '03/19', '03/20'],
-        datasets: [{
-          label: 'Uso de transportes',
-          data: [1, 2, 3, 2],
-          backgroundColor: ['red', 'yellow', 'green', 'yellow']
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            ticks:{
-              color: 'yellow'
-            }
-          },
-          y: {
-            beginAtZero: true,
-            max: 3,
-            ticks:{
-              color: 'yellow'
-            }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let meuGraficoTransporte;
+
+// Função para criar/atualizar o gráfico de transporte
+function atualizarGraficoTransporte() {
+  const periodo = document.getElementById('periodoTransporte').value;
+  let dados;
+  let rotulos;
+  let maxY = 3; // Valor máximo padrão para o eixo Y
+  
+  // Dados de exemplo para diferentes períodos
+  switch(periodo) {
+    case '7dias':
+      rotulos = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+      dados = [1, 2, 3, 2, 1, 0, 1];
+      maxY = 3;
+      break;
+    case '30dias':
+      rotulos = Array.from({length: 30}, (_, i) => `Dia ${i+1}`);
+      dados = Array.from({length: 30}, () => Math.floor(Math.random() * 4));
+      maxY = 3;
+      break;
+    case '6meses':
+      rotulos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+      dados = [12, 15, 18, 16, 20, 19];
+      maxY = 25;
+      break;
+    case '1ano':
+      rotulos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      dados = [25, 30, 35, 32, 40, 38, 42, 40, 38, 35, 33, 40];
+      maxY = 50;
+      break;
+  }
+  
+  const ctx = document.getElementById('graficoTransporte').getContext('2d');
+  
+  // Se o gráfico já existe, destrua-o antes de criar um novo
+  if (meuGraficoTransporte) {
+    meuGraficoTransporte.destroy();
+  }
+  
+  // Crie um novo gráfico
+  meuGraficoTransporte = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: rotulos,
+      datasets: [{
+        label: `Uso de transportes - ${document.getElementById('periodoTransporte').options[document.getElementById('periodoTransporte').selectedIndex].text}`,
+        data: dados,
+        backgroundColor: Array.from({length: dados.length}, (_, i) => {
+          const valor = dados[i];
+          if (valor >= 3) return 'green';    // Uso intenso
+          if (valor >= 2) return 'yellow';    // Uso moderado
+          if (valor >= 1) return 'orange';    // Uso leve
+          return 'red';                      // Nenhum uso
+        })
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          ticks: {
+            color: 'yellow'
           }
         },
-        plugins:{
-          data:{
-            labels:{
-              color: 'yellow'
+        y: {
+          beginAtZero: true,
+          max: maxY,
+          ticks: {
+            color: 'yellow',
+            callback: function(value) {
+              return value + ' viagem(ns)'; // Adiciona unidade aos valores
             }
-          },
-          legend:{
-            labels:{
-              color: 'yellow'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: 'yellow'
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.parsed.y + ' viagem(ns)'; // Formata tooltip
             }
           }
         }
       }
-    });
-    </script>
+    }
+  });
+}
+
+// Inicialize o gráfico quando a página carregar
+window.onload = function() {
+  atualizarGraficoTransporte();
+};
+</script>
 </body>

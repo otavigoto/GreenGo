@@ -44,7 +44,13 @@
     <section class="section eletricidade-bg">
         <div class="grid">
             <div class="grafico-container">
-                <canvas id="grafico" class="grafico"></canvas>
+              <select id="periodoEnergia" onchange="atualizarGraficoEnergia()">
+                <option value="7dias">7 dias</option>
+                <option value="30dias">30 dias</option>
+                <option value="6meses">6 meses</option>
+                <option value="1ano">1 ano</option>
+              </select>
+              <canvas id="graficoEnergia"></canvas>
             </div>
             <div class="categoria-container">
                 <h1>Energia</h1>
@@ -75,46 +81,93 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    const ctx = document.getElementById('grafico').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['03/17', '03/18', '03/19', '03/20'],
-        datasets: [{
-          label: 'Gasto de Energia',
-          data: [2, 7, 15, 10],
-          backgroundColor: ['green', 'yellow', 'red', 'orange']
-        }]
-      },
-      options: {
-        scales: {
-          x: {
-            ticks:{
-              color: 'yellow'
-            }
-          },
-          y: {
-            beginAtZero: true,
-            max: 10,
-            ticks:{
-              color: 'yellow'
-            }
+<script>
+let meuGraficoEnergia;
+
+// Função para criar/atualizar o gráfico de energia
+function atualizarGraficoEnergia() {
+  const periodo = document.getElementById('periodoEnergia').value;
+  let dados;
+  let rotulos;
+  let maxY = 10; // Valor máximo padrão para o eixo Y
+  
+  // Dados de exemplo para diferentes períodos
+  switch(periodo) {
+    case '7dias':
+      rotulos = ['03/17', '03/18', '03/19', '03/20', '03/21', '03/22', '03/23'];
+      dados = [2, 7, 15, 10, 8, 12, 9];
+      maxY = 20;
+      break;
+    case '30dias':
+      rotulos = Array.from({length: 30}, (_, i) => `Dia ${i+1}`);
+      dados = Array.from({length: 30}, () => Math.floor(Math.random() * 15) + 1);
+      maxY = 20;
+      break;
+    case '6meses':
+      rotulos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+      dados = [45, 60, 55, 50, 65, 70];
+      maxY = 100;
+      break;
+    case '1ano':
+      rotulos = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      dados = [80, 75, 70, 65, 90, 85, 100, 95, 80, 75, 70, 65];
+      maxY = 120;
+      break;
+  }
+  
+  const ctx = document.getElementById('graficoEnergia').getContext('2d');
+  
+  // Se o gráfico já existe, destrua-o antes de criar um novo
+  if (meuGraficoEnergia) {
+    meuGraficoEnergia.destroy();
+  }
+  
+  // Crie um novo gráfico
+  meuGraficoEnergia = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: rotulos,
+      datasets: [{
+        label: `Gasto de Energia - ${document.getElementById('periodoEnergia').options[document.getElementById('periodoEnergia').selectedIndex].text}`,
+        data: dados,
+        backgroundColor: Array.from({length: dados.length}, (_, i) => {
+          const valor = dados[i];
+          if (valor > 15) return 'red';
+          if (valor > 10) return 'orange';
+          if (valor > 5) return 'yellow';
+          return 'green';
+        })
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          ticks: {
+            color: 'yellow'
           }
         },
-        plugins:{
-          data:{
-            labels:{
-              color: 'yellow'
-            }
-          },
-          legend:{
-            labels:{
-              color: 'yellow'
-            }
+        y: {
+          beginAtZero: true,
+          max: maxY,
+          ticks: {
+            color: 'yellow'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: 'yellow'
           }
         }
       }
-    });
-    </script>
+    }
+  });
+}
+
+// Inicialize o gráfico quando a página carregar
+window.onload = function() {
+  atualizarGraficoEnergia();
+};
+</script>
 </body>
