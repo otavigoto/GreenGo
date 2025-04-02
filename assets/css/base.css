@@ -51,6 +51,10 @@ a {
   text-decoration: none;
 }
 
+.section{
+  height: 100vh;
+}
+
 .menu {
   position: fixed;
   width: 100%;

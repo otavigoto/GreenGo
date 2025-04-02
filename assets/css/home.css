@@ -28,6 +28,8 @@
 .indice{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 30px;
     text-shadow: 0 0 20px black;
     padding: 150px 0px;
@@ -41,6 +43,10 @@
 
 .indice p {
     font-size: 40px;
+}
+
+.indice a{
+    width:fit-content;
 }
 
 .dica {
@@ -234,4 +240,8 @@
 .transporte-container:hover{
     transition: all 300ms ease-in-out;
     transform: scale(1.1);
+}
+.graficos{
+    display:flex;
+    flex-direction: row;
 }

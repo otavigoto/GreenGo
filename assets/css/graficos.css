@@ -1,0 +1,22 @@
+html,body{
+    height:100%;
+    margin:0;
+}
+body{
+    display:flex;
+    flex-direction: column;
+}
+main.conteudo{
+    display:grid;
+    grid-template-columns: 2fr 1fr;
+}
+.grid{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.titulo{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
