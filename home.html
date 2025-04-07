@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/home.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./assets/js/home.js"></script>
+  <title>Homepage - Physis</title>
+</head>
+<body class="main-bg">
+
+  <aside class="navbar">
+    <div class="navbar-container">
+      <nav class="navbar-content">
+
+        <a href="home.html#"><img class="navbar-logo-img-depois" src="./assets/img/Physis_Logo.png"></a>
+
+        <ul class="direita">
+          <li><a class="navbar-text" href="./home.html#indice">Indice</a></li>
+          <li><a class="navbar-text" href="./home.html#categorias">Inserir Dados</a></li>
+          <li><a class="navbar-text" href="./home.html#dicas">dicas</a></li>
+          <li><a class="navbar-text yellow" href="./graficos.html">historico</a></li>
+          <li><a class="navbar-text yellow" href="./perfil.html">Ver Perfil</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <img class="leaf-bg hidden-x" src="./assets/img/Folhas_Physis.png">
+
+  <div class="menu-spacing"></div>
+
+  <section id="indice" class="indice main-content">
+
+    <div class="indices-section">
+    <div class="grid-indicetotal">
+        <div class="selosoares">
+            <h2>Selo Soares</h2>
+            <div class="indice-nota">
+              <h3>A</h3>
+            </div>
+        </div>
+        <div class="grid-graphic">
+            <p>Gráfico Geral</p>
+
+            <div class="grafico-container">
+              <select class="darkgreen-bg" id="periodo" onchange="atualizarGrafico()">
+                <option value="1">1 dia</option>
+                <option value="7">7 dias</option>
+                <option value="30">30 dias</option>
+                <option value="365">1 ano</option>
+              </select>     
+              <canvas id="graficoGeral" width="380" height="190"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="dias-section">
+      <div class="dias-grid">
+        <div class="lightgreen-bg">
+          <p>segunda</p>
+          <h3>A</h3>
+        </div>
+        <div class="lightgreen-bg">
+          <p>terça</p>
+          <h3>M</h3>
+        </div>
+        <div class="lightgreen-bg">
+          <p>quarta</p>
+          <h3>A</h3>
+        </div>
+        <div class="lightgreen-bg">
+          <p>quinta</p>
+          <h3>B</h3>
+        </div>
+        <div class="lightgreen-bg">
+          <p>sexta</p>
+          <h3>A</h3>
+        </div>
+        <div class="lightgreen-bg">
+          <p>sábado</p>
+          <h3>A</h3>
+        </div>
+        <div class="lightgreen-bg">
+          <p>domingo</p>
+          <h3>B</h3>
+        </div>
+      </div>
+  
+    </div>
+    <a class="graphic-button" href="/graficos.html">Gráficos Individuais</a>
+  </div>
+</section>
+
+  <div class="spacing"></div>
+
+  <section id="categorias" class="main-content categorias-section">
+    <form id="form-categorias" class="categorias-grid">
+      <div class="yellow-bg">
+        <img src="./assets/img/Lixo.svg">
+        <div class="input-grid">
+          <h1>Gestão de residuos</h1>
+          <p>Insira a quantidade de lixo produzido por você:</p>
+          <input class="darkgreen-bg" type="text" id="kg-reciclavel" name="kg-reciclavel" placeholder="reciclavel/kg">
+          <input class="darkgreen-bg" type="text" id="kg-organico" name="kg-organico" placeholder="organico/kg"> 
+        </div>
+      </div>
+      <div class="yellow-bg">
+        <img src="./assets/img/transporte.svg">
+        <div class="input-grid">
+          <h1>Meios de Transporte</h1>
+          <p>Insira o tipo de transporte e a distância percorrida em km:</p>
+          <select class="darkgreen-bg" id="transporte-select" name="transporte-select">
+            <option disabled>Tipo de transporte</option>
+            <option value="">Transporte público (ônibus, metrô, trem)</option>
+            <option value="">Bicicleta</option>
+            <option value="">Caminhada</option>
+            <option value="">Carro (combustível fósseis)</option>
+            <option value="">Carro elétrico</option>
+            <option value="">Carona compartilhada</option>
+          </select>
+          <input class="darkgreen-bg" type="number" id="km-percorrido" name="km-percorrido" placeholder="distância em km">
+        </div>
+      </div>
+      <div class="yellow-bg">
+        <img src="./assets/img/agua.svg">
+        <div class="input-grid">
+          <h1>Consumo de Água</h1>
+          <p>Insira a medição do seu hidrômetro:</p>
+          <input class="darkgreen-bg" type="number" id="hidrometro" name="hidrometro" placeholder="medição do hidrômetro">
+        </div>
+      </div>
+      <div class="yellow-bg">
+        <img src="./assets/img/energia.svg">
+        <div class="input-grid">
+          <h1>Consumo de Energia</h1>
+          <p>Insira a medição do seu relógio de energia:</p>
+          <input class="darkgreen-bg" type="number" id="energia" name="energia" placeholder="medição do relógio">
+        </div>
+      </div>
+    </form>
+
+  </section>
+
+  <section class="main-content button-section">
+    <a href="./graficos.html"><button class="darkgreen-bg" type="submit">Gráficos</button></a>
+    <button class="yellow-bg" type="submit" form="form-categorias">Enviar</button>
+  </section>
+
+  <div class="spacing"></div>
+
+  <section class="dicas-section darkgreen-bg">
+  <div class="dicas main-content" id="dicas">
+    <div class="titulo-dicas">
+        <h2>Aqui vão algumas dicas</h2> 
+        <h2>para cultivar hábitos mais </h2> 
+        <h2>sustentáveis na sua rotina:</h2>
+    </div>
+    <div class="dicas-grid">
+        <div class="box-dicas">
+            <h2>Água</h2><br>
+            <p>Mantenha a torneira sempre fechada quando escovando os dentes</p>
+        </div>
+        <div class="box-dicas">
+            <h2>Energia</h2><br>
+            <p>Desligue todas as luzes de sua casa ao sair</p>
+        </div>
+        <div class="box-dicas">
+            <h2>Lixo</h2><br>
+            <p>Separe os lixos de forma organizada, reciclavel e não reciclavel</p>
+        </div>
+        <div class="box-dicas">
+            <h2>Transporte</h2><br>
+            <p>Evite o uso de transporte particular, utilize transporte público</p>
+        </div>
+    </div>
+  </div>
+  </section>
+</body>
+</html>
