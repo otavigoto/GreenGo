@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+<body class="main-content main-bg hidden-x">
+  <%- include ('partials/navbarlogin.ejs') %>
+  
+<section class="login-section">
+    <div class="grid">
+        <form action="/perfil/editar" class="input-grid" method="post" autocomplete="off">
+            <label class="topo">Nome Completo</label>
+            <input type="text" id="fullname" name="nome" class="nome-completo" value="<%= usuario.nome%>">
+            <label>Data de Nascimento</label>
+            <input type="text" id="bith-date" name="data" class="data-de-nacimento" value="<%= usuario.data_nascimento.split('T')[0].split('-').reverse().join('/') %>">
+            <label>CPF</label>
+            <input type="text" id="user-CPF" name="cpf" class="cpf-usuario" value="<%= usuario.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')%>" disabled>
+            <label>Senha</label>
+            <input type="password" id="user-celphone" name="senha" class="telefone-usuario" value="<%= usuario.senha %>">
+            <label>Email</label>
+            <input type="text" id="user-email" name="email" class="email-usuario" value="<%= usuario.email %>">
+            <button type="submit" id="alterar-dados" name="alterar-dados" class="alterar-dados yellow-bg">Editar Dados</button>
+        </form>
+        <div class="grid-linha">
+            <div class="foto-perfil">
+                <img class="image-perfil" src="img/Icon_perfil.jpeg">
+            </div>
+            <div class="texto-perfil">
+                <h2><%= usuario.nome %></h2>
+                <p class="chave-primaria"><%= usuario.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')%></p>
+                <a href="/perfil/logout"><button class="yellow-bg">Sair da conta</button></a>
+            </div>
+        </div>
+    </div>
+</section>
+    
+</body>
+</html>
