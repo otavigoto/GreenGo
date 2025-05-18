@@ -1,0 +1,84 @@
+<%- include('partials/header') %>
+<body class="main-content main-bg hidden-x">
+    <%- include ('partials/navbarlogin.ejs') %>
+
+    <div class="box-direita">
+        <div class="titulo">
+            <h1> Edição de Dados</h1> 
+        </div>
+        <form action="/editar" class="dados-grid" method="post" id="form-editar">
+            <div class="subtitulo-grid">
+                <p>Selecione a data</p>
+                <input type="date" id="data" class="data" name="data_consumo" placeholder="DD/MM/AA" required>
+            </div>
+            <p>ㅤ</p>
+            <div class="inputs-dados">
+                <div class="nomes-inputs">
+                    <h6>Água</h6>
+                    <input type="number" id="hidrometro" class="hidrometro" name="agua_litros" placeholder="Litros" required>
+                </div>
+        
+                <div class="nomes-inputs">
+                    <h6>Energia</h6>
+                    <input type="number" id="energia" class="energia" name="energia_kwh" placeholder="kWh" required>
+                </div>
+        
+                <div class="nomes-inputs">
+                    <h6>Lixo</h6>
+                    <div class="dois-container">
+                        <input type="number" id="lixo_r" class="dois-esquerda" name="lixo_reciclavel_kg" placeholder="Reciclável (kg)" required>
+                        <input type="number" id="lixo_o" class="dois-direita" name="lixo_nao_reciclavel_kg" placeholder="Orgânico (kg)" required>
+                    </div>
+                </div>
+        
+                <div class="nomes-inputs">
+                    <h6>Transporte</h6>
+                    <select class="select-transporte dois-direita" id="select-transporte" name="tipo_transporte" required>
+                        <option disabled>Tipo de transporte</option>
+                        <option value="3">Bicicleta, transporte público ou elétrico</option>
+                        <option value="2">Uso misto de transporte público e privado</option>
+                        <option value="1">Uso exclusivo de transporte a combustíveis fósseis</option>
+                    </select>
+                </div>
+            </div>
+        
+            <div class="botoes">
+                <button type="button" id="apagar" class="apagar-btn" onclick="apagarDados()">Apagar</button>
+                <button type="submit" id="enviar" class="enviar-btn">Atualizar</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function apagarDados() {
+            const data = document.getElementById('data').value;
+    
+            if (!data) {
+                alert('Por favor, selecione uma data para apagar os dados.');
+                return;
+            }
+    
+            if (confirm('Tem certeza de que deseja apagar os dados desta data?')) {
+                fetch('/editar/apagar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ data_consumo: data }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Dados apagados com sucesso!');
+                        window.location.reload();
+                    } else {
+                        alert(data.message || 'Erro ao apagar os dados.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao apagar os dados:', error);
+                    alert('Erro ao apagar os dados.');
+                });
+            }
+        }
+    </script>
+</body>
