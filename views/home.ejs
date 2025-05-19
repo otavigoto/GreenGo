@@ -1,0 +1,252 @@
+<%- include('partials/header') %>
+<body class="main-bg">
+
+  <%- include ('partials/navbarlogin.ejs') %>
+
+  <section id="indice" class="indice main-content">
+
+    <div class="indices-section">
+    <div class="grid-indicetotal">
+        <div class="selosoares">
+            <h2>Selo Soares</h2>
+            <div class="indice-nota">
+              <% const diasSemana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']; %>
+              <h3><%if (indicesPorDia[diasSemana[hojeSemana]]) {%>
+                <%= indicesPorDia[diasSemana[hojeSemana]] == 3.00 ? 'S' : indicesPorDia[diasSemana[hojeSemana]] >= 2.25 ? 'A' : indicesPorDia[diasSemana[hojeSemana]] >= 1.75 ? 'M' : indicesPorDia[diasSemana[hojeSemana]] >=1.25 ? 'B' : 'F' %></h3>
+                <%} else {%>
+                  <%= '-' %>
+                <%}%>
+            </div>
+        </div>
+        <div class="grid-graphic">
+            <p>Gráfico Geral</p>
+
+            <div class="grafico-container">
+              <select class="darkgreen-bg" id="periodo" onchange="atualizarGrafico()">
+                <option value="1">1 dia</option>
+                <option value="7">7 dias</option>
+                <option value="30">30 dias</option>
+                <option value="365">1 ano</option>
+              </select>     
+              <canvas id="graficoGeral" width="380" height="190"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="dias-section">
+      <div class="dias-grid">
+        <% diasSemana.forEach((dia, index) => { %>
+        <div class="midgreen-bg">
+          <p><%= index === hojeSemana ? 'hoje' : dia %></p>
+          <h3>
+            <% if (indicesPorDia[dia]) { %>
+              <%= indicesPorDia[dia] == 3.00 ? 'S' : indicesPorDia[dia] >= 2.25 ? 'A' : indicesPorDia[dia] >= 1.75 ? 'M' : indicesPorDia[dia] >=1.25 ? 'B' : 'F' %>
+            <% } else { %>
+              -
+            <% } %>
+          </h3>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  
+    </div>
+    <div class="button-div">
+    <a class="graphic-button" href="/graficos">Gráficos Individuais</a>
+    </div>
+  </div>
+</section>
+
+  <div class="spacing"></div>
+
+  <section id="categorias" class="main-content categorias-section">
+    <form action="/home" id="form-categorias" class="categorias-grid" method="post">
+      <div class="yellow-bg">
+        <img src="img/Lixo.svg">
+        <div class="input-grid">
+          <h1>Gestão de residuos</h1>
+          <p>Insira a quantidade de lixo produzido por você:</p>
+          <input class="darkgreen-bg" type="text" id="kg-reciclavel" name="reciclavel" placeholder="reciclavel/kg">
+          <input class="darkgreen-bg" type="text" id="kg-organico" name="organico" placeholder="organico/kg"> 
+        </div>
+      </div>
+      <div class="yellow-bg">
+        <img src="img/transporte.svg">
+        <div class="input-grid">
+          <h1>Meios de Transporte</h1>
+          <p>Insira o tipo de transporte e a distância percorrida em km:</p>
+          <select class="darkgreen-bg" id="transporte-select" name="transporte">
+            <option disabled>Tipo de transporte</option>
+            <option value="3">Bicicleta, transporte público ou elétrico</option>
+            <option value="2">Uso misto de transporte publico e privado</option>
+            <option value="1">Uso exclusivo de transporte a combustíveis fósseis</option>
+          </select>
+        </div>
+      </div>
+      <div class="yellow-bg">
+        <img src="img/agua.svg">
+        <div class="input-grid">
+          <h1>Consumo de Água</h1>
+          <p>Insira a medição do seu hidrômetro:</p>
+          <input class="darkgreen-bg" type="number" id="hidrometro" name="agua" placeholder="medição do hidrômetro">
+        </div>
+      </div>
+      <div class="yellow-bg">
+        <img src="img/energia.svg">
+        <div class="input-grid">
+          <h1>Consumo de Energia</h1>
+          <p>Insira a medição do seu relógio de energia:</p>
+          <input class="darkgreen-bg" type="number" id="energia" name="energia" placeholder="medição do relógio">
+        </div>
+      </div>
+    </form>
+
+  </section>
+
+  <section class="main-content button-section">
+    <a href="/graficos"><button class="darkgreen-bg" type="submit">Gráficos</button></a>
+    <button class="yellow-bg" type="submit" form="form-categorias">Enviar</button>
+  </section>
+
+  <div class="spacing"></div>
+
+  <section class="dicas-section darkgreen-bg">
+  <div class="dicas main-content" id="dicas">
+    <div class="titulo-dicas">
+        <h2>Aqui vão algumas dicas</h2> 
+        <h2>para cultivar hábitos mais </h2> 
+        <h2>sustentáveis na sua rotina:</h2>
+    </div>
+    <div class="dicas-grid">
+      <div class="box-dicas">
+          <h2>Água</h2><br>
+          <% if (dicas.agua > 0) { %>
+            <% if (dicas.agua === 3) { %>
+                <p>Parabéns! Seu consumo de água está excelente. Continue assim!</p>
+            <% } else if (dicas.agua === 2) { %>
+                <p>Seu consumo de água está razoável. Tente reduzir o uso em atividades como lavar louça ou tomar banho.</p>
+            <% } else { %>
+                <p>Seu consumo de água está alto. Considere fechar a torneira ao escovar os dentes e reduzir o tempo de banho.</p>
+            <% } %>
+        <% } else { %>
+            <p>Os dados de consumo de água ainda não estão disponíveis.</p>
+        <% } %>
+      </div>
+      <div class="box-dicas">
+          <h2>Energia</h2><br>
+          <% if (dicas.energia > 0) { %>
+            <% if (dicas.energia === 3) { %>
+                <p>Parabéns! Seu consumo de energia está excelente. Continue assim!</p>
+            <% } else if (dicas.energia === 2) { %>
+                <p>Seu consumo de energia está razoável. Tente reduzir o uso de aparelhos eletrônicos.</p>
+            <% } else { %>
+                <p>Seu consumo de energia está alto. Considere desligar aparelhos eletrônicos e ar condicionado.</p>
+            <% } %>
+        <% } else { %>
+            <p>Os dados de consumo de água ainda não estão disponíveis.</p>
+        <% } %>
+      </div>
+      <div class="box-dicas">
+          <h2>Lixo</h2><br>
+          <% if (dicas.lixo > 0) { %>
+            <% if (dicas.lixo === 3) { %>
+                <p>Parabéns! Você está gerenciando bem seus resíduos.</p>
+            <% } else if (dicas.lixo === 2) { %>
+                <p>Seu consumo de lixo está razoável. Tente reciclar mais materiais e reduzir o desperdício.</p>
+            <% } else { %>
+                <p>Seu consumo de lixo está alto. Separe recicláveis e orgânicos corretamente.</p>
+            <% } %>
+        <% } else { %>
+            <p>Os dados de consumo de lixo ainda não estão disponíveis.</p>
+        <% } %>
+      </div>
+      <div class="box-dicas">
+          <h2>Transporte</h2><br> 
+          <% if (dicas.transporte > 0) { %>
+            <% if (parseInt(dicas.transporte) === 3) { %>
+                <p>Parabéns! Você está utilizando transporte sustentável.</p>
+            <% } else if (parseInt(dicas.transporte) === 2) { %>
+                <p>Seu consumo de transporte está razoável. Tente usar mais transporte público ou bicicleta.</p>
+            <% } else { %>
+                <p>Seu consumo de transporte está alto. Considere reduzir o uso de carros movidos a combustíveis fósseis.</p>
+            <% } %>
+        <% } else { %>
+            <p>Os dados de consumo de transporte ainda não estão disponíveis.</p>
+        <% } %>
+      </div>
+  </div>
+  </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const dadosPorPeriodo = {
+      1: {
+        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
+        valores: [92, 85, 78, 88]
+      },
+      7: {
+        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
+        valores: [85, 90, 75, 80]
+      },
+      30: {
+        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
+        valores: [70, 88, 65, 72]
+      },
+      365: {
+        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
+        valores: [60, 75, 55, 68]
+      }
+    };
+    
+    const backgroundColors = ['#f9f2e0', '#f2b946', '#144d3a', '#78c2ad'];
+    const borderColors = [
+      'rgba(54, 162, 235, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(153, 102, 255, 1)'
+    ];
+    
+    let chart;
+    
+    function criarGrafico(periodo) {
+      const ctx = document.getElementById('graficoGeral').getContext('2d');
+      const dados = dadosPorPeriodo[periodo];
+    
+      if (chart) {
+        chart.destroy();
+      }
+    
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: dados.labels,
+          datasets: [{
+            label: 'Pontuação',
+            data: dados.valores,
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        }
+      });
+    }
+    
+    function atualizarGrafico() {
+      const periodo = document.getElementById('periodo').value;
+      criarGrafico(periodo);
+    }
+    window.onload = () => criarGrafico(7);
+    
+    
+  </script>
+</body>
+</html>
