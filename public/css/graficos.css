@@ -1,0 +1,124 @@
+.graphics-section{
+    height: 70vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-text{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    width:100%;
+    height:100%;
+    gap:2rem;
+}
+.text-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+    height:100%;
+    width: 100%;
+}
+.date-row{
+    display:flex;
+    align-items: center;
+    gap:1rem;
+}
+.first-text{
+    font-size: 5rem;
+}
+.second-text{
+    color:var(--darkgreen-color);
+    font-style: italic;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+}
+.third-text{
+    color:var(--darkgreen-color);
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    width: 5%;
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+}
+.data{
+    background:var(--darkgreen-color);
+    border-radius: 30px;
+    padding: 3px
+}
+
+.edition-button{
+    background-color: var(--darkgreen-color);
+    color:var(--offwhite-color);
+    padding: 0.6rem 1.5rem;
+    border-radius: 300px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    width: 20%;
+    padding: 5px 35px;
+    cursor: pointer;
+}
+.edition-button:hover{
+    background:var(--yellow-color);
+}
+.editar-box{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content:flex-end;
+    height:30%;
+}
+canvas {
+    width: 100% !important;
+    height: 200px !important;
+    background-color: var(--darkgreen-color);
+    border-radius: 1rem;
+    box-sizing: border-box;
+  }
+.grid-graphics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    justify-items: center;
+    margin-top: 2rem;
+  }
+  .graphics-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } 
+  .graphics-bar {
+    width: 250px;
+    background-color: var(--darkgreen-color);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.graphic-title{
+    color:var(--darkgreen-color);
+    font-family: 'Poppins', sans-serif; 
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  
+
+  input[type="date"]::-webkit-inner-spin-button, /* PRA TIRAR O SIMBOLO DO CALENDARIO E O USUARIO DIGITAR*/
+  input[type="date"]::-webkit-calendar-picker-indicator {    
+  display: none;
+  -webkit-appearance: none; } 
+  input::-webkit-outer-spin-button,  /* PRA TIRAR AS SETAS DO INPUT DE NUMERO*/
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0; 
+  }
+
+  
