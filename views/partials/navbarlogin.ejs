@@ -1,0 +1,22 @@
+<aside class="navbar">
+  <div class="navbar-container">
+    <nav class="navbar-content">
+
+      <a href="home#"><img class="navbar-logo-img-depois" src="img/Physis_Logo.png"></a>
+
+      <ul class="direita">
+        <li><a class="navbar-text" href="/home#indice">Indice</a></li>
+        <li><a class="navbar-text" href="/home#categorias">Inserir Dados</a></li>
+        <li><a class="navbar-text" href="/home#dicas">dicas</a></li>
+        <li><a class="navbar-text yellow" href="/graficos">historico</a></li>
+        <li><a class="navbar-text yellow perfil-border" href="/perfil"><%= usuario.nome.split(" ")[0]%></a></li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<img class="leaf-bg-depois hidden-x" src="img/Folhas_Physis.png">
+
+<div class="menu-spacing"></div>
+
+<h2 class="msg"><%if (msg) { %><%= msg %><% } %></h2>
