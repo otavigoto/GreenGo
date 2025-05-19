@@ -693,7 +693,9 @@ app.post('/perfil/editar', verificarLogin, (req, res) => {
         WHERE cpf = ?
     `;
 
-    db.query(query, [nome, dataFormatada, email, senha, cpf], (erro, resultados) => {
+    let senha_codificada = codificarTexto(senha);
+
+    db.query(query, [nome, dataFormatada, email, senha_codificada, cpf], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao atualizar os dados do usuário: ' + erro);
             return res.status(500).send('Erro ao atualizar os dados do perfil');
