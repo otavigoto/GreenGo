@@ -10,13 +10,8 @@
         <div class="selosoares">
             <h2>Selo Soares</h2>
             <div class="indice-nota">
-              <% const diasSemana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']; %>
-              <h3><%if (indicesPorDia[diasSemana[hojeSemana]]) {%>
-                <%= indicesPorDia[diasSemana[hojeSemana]] == 3.00 ? 'S' : indicesPorDia[diasSemana[hojeSemana]] >= 2.25 ? 'A' : indicesPorDia[diasSemana[hojeSemana]] >= 1.75 ? 'M' : indicesPorDia[diasSemana[hojeSemana]] >=1.25 ? 'B' : 'F' %></h3>
-                <%} else {%>
-                  <%= '-' %>
-                <%}%>
-            </div>
+              <h3 id="seloSoares">-</h3>
+          </div>
         </div>
         <div class="grid-graphic">
             <p>Gráfico Geral</p>
@@ -24,16 +19,17 @@
             <div class="grafico-container">
               <select class="darkgreen-bg" id="periodo" onchange="atualizarGrafico()">
                 <option value="1">1 dia</option>
-                <option value="7">7 dias</option>
+                <option value="7" selected>7 dias</option>
                 <option value="30">30 dias</option>
                 <option value="365">1 ano</option>
-              </select>     
+            </select>  
               <canvas id="graficoGeral" width="380" height="190"></canvas>
             </div>
         </div>
     </div>
     <div class="dias-section">
       <div class="dias-grid">
+        <% const diasSemana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']; %>
         <% diasSemana.forEach((dia, index) => { %>
         <div class="midgreen-bg">
           <p><%= index === hojeSemana ? 'hoje' : dia %></p>
@@ -179,74 +175,86 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const dadosPorPeriodo = {
-      1: {
-        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
-        valores: [92, 85, 78, 88]
-      },
-      7: {
-        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
-        valores: [85, 90, 75, 80]
-      },
-      30: {
-        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
-        valores: [70, 88, 65, 72]
-      },
-      365: {
-        labels: ['Água', 'Lixo', 'Transporte', 'Energia'],
-        valores: [60, 75, 55, 68]
-      }
-    };
-    
-    const backgroundColors = ['#f9f2e0', '#f2b946', '#144d3a', '#78c2ad'];
-    const borderColors = [
-      'rgba(54, 162, 235, 1)',
-      'rgba(75, 192, 192, 1)',
-      'rgba(255, 206, 86, 1)',
-      'rgba(153, 102, 255, 1)'
-    ];
-    
     let chart;
-    
-    function criarGrafico(periodo) {
-      const ctx = document.getElementById('graficoGeral').getContext('2d');
-      const dados = dadosPorPeriodo[periodo];
-    
-      if (chart) {
+
+    async function fetchMedias(periodo) {
+    try {
+        const response = await fetch(`/api/medias?dias=${periodo}`);
+        const data = await response.json();
+        return {
+            labels: ['Água', 'Energia', 'Lixo', 'Transporte'],
+            valores: [
+                data.media_indice_agua || 0,
+                data.media_indice_energia || 0,
+                data.media_indice_lixo || 0,
+                data.media_indice_transporte || 0
+            ],
+            mediaIndiceTotal: data.media_indice_total || 0 // Adicione a média do índice total
+        };
+    } catch (error) {
+        console.error('Erro ao buscar médias:', error);
+        return { labels: [], valores: [], mediaIndiceTotal: 0 };
+    }
+}
+
+async function criarGrafico(periodo) {
+    const ctx = document.getElementById('graficoGeral').getContext('2d');
+    const dados = await fetchMedias(periodo);
+
+    // Atualizar o Selo Soares com a média do índice total
+    const seloSoares = document.getElementById('seloSoares');
+    if (dados.mediaIndiceTotal > 0) {
+        seloSoares.textContent =
+            dados.mediaIndiceTotal == 3.0
+                ? 'S'
+                : dados.mediaIndiceTotal >= 2.25
+                ? 'A'
+                : dados.mediaIndiceTotal >= 1.75
+                ? 'M'
+                : dados.mediaIndiceTotal >= 1.25
+                ? 'B'
+                : 'F';
+    } else {
+        seloSoares.textContent = '-';
+    }
+
+    // Criar ou atualizar o gráfico
+    if (chart) {
         chart.destroy();
-      }
-    
-      chart = new Chart(ctx, {
+    }
+
+    chart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: dados.labels,
-          datasets: [{
-            label: 'Pontuação',
-            data: dados.valores,
-            backgroundColor: backgroundColors,
-            borderColor: borderColors,
-            borderWidth: 1
-          }]
+            labels: dados.labels,
+            datasets: [
+                {
+                    label: 'Pontuação Média',
+                    data: dados.valores,
+                    backgroundColor: ['#f9f2e0', '#f2b946', '#144d3a', '#78c2ad'],
+                    borderColor: ['#f9f2e0', '#f2b946', '#144d3a', '#78c2ad'],
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              max: 100
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 3 // Máximo baseado na escala de índices
+                }
             }
-          }
         }
-      });
-    }
-    
+    });
+}
+
     function atualizarGrafico() {
-      const periodo = document.getElementById('periodo').value;
-      criarGrafico(periodo);
+        const periodo = document.getElementById('periodo').value;
+        criarGrafico(periodo);
     }
-    window.onload = () => criarGrafico(7);
-    
-    
-  </script>
+
+    window.onload = () => criarGrafico(7); // Carrega o gráfico com 7 dias por padrão
+</script>
 </body>
 </html>

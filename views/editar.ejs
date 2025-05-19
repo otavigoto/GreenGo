@@ -49,6 +49,38 @@
         </form>
     </div>
     <script>
+
+async function buscarDadosConsumo() {
+        const data = document.getElementById('data').value;
+
+        if (!data) return;
+
+        try {
+            const response = await fetch(`/editar/dados?data=${data}`);
+            const dados = await response.json();
+
+            if (dados.success) {
+                document.getElementById('hidrometro').value = dados.consumo.agua_litros || '';
+                document.getElementById('energia').value = dados.consumo.energia_kwh || '';
+                document.getElementById('lixo_r').value = dados.consumo.lixo_reciclavel_kg || '';
+                document.getElementById('lixo_o').value = dados.consumo.lixo_nao_reciclavel_kg || '';
+                document.getElementById('select-transporte').value = dados.consumo.tipo_transporte || '';
+            } else {
+                alert(dados.message || 'Nenhum dado encontrado para esta data.');
+                document.getElementById('hidrometro').value = '';
+                document.getElementById('energia').value = '';
+                document.getElementById('lixo_r').value = '';
+                document.getElementById('lixo_o').value = '';
+                document.getElementById('select-transporte').value = '';
+            }
+        } catch (error) {
+            console.error('Erro ao buscar dados de consumo:', error);
+            alert('Erro ao buscar dados de consumo.');
+        }
+    }
+
+    document.getElementById('data').addEventListener('blur', buscarDadosConsumo);
+
         function apagarDados() {
             const data = document.getElementById('data').value;
     

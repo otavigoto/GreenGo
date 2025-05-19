@@ -1,0 +1,113 @@
+<%- include('partials/header') %>
+<body class="main-content main-bg hidden-x">
+  <%- include ('partials/navbarlogin.ejs') %>
+
+    <section class="main-content graphics-section">
+        <div class="grid-text">
+          <div class="text-column">
+            <h1 class="first-text">Índices de Sustentabilidade</h1>
+            <h2 class="second-text">Quantos dias do histórico voce deseja visualizar?</h2>
+
+            <form action="/graficos" class="date-row" method="get">
+              
+                <label class="third-text" for="dias">Até</label>
+                <input class="data darkgreen-bg dias" type="number" id="dias" name="dias" min="1" max="30" value="7">
+                <button class="edition-button" type="submit">Enviar</button>
+            </form>
+            <div class="editar-box">
+
+            <a class="edition-button" href="/editar">Editar Dados</a>
+            </div>
+          </div>
+          <div class="grid-graphics">
+            <div class="graphics-item">
+              <h3 class="graphic-title">Água: <%= medias.media_indice_agua == 3 ? 'A' : medias.media_indice_agua == 2 ? 'M' : 'B'%></h3>
+              <div class="graphics-bar">
+                <canvas id="graficoAgua"></canvas>
+              </div>
+            </div>
+          
+            <div class="graphics-item">
+              <h3 class="graphic-title">Energia: <%= medias.media_indice_energia == 3 ? 'A' : medias.media_indice_energia == 2 ? 'M' : 'B'%></h3>
+              <div class="graphics-bar">
+                <canvas id="graficoEnergia"></canvas>
+              </div>
+            </div>
+          
+            <div class="graphics-item">
+              <h3 class="graphic-title">Lixo: <%= medias.media_indice_lixo == 3 ? 'A' : medias.media_indice_lixo == 2 ? 'M' : 'B'%></h3>
+              <div class="graphics-bar">
+                <canvas id="graficoLixo"></canvas>
+              </div>
+            </div>
+          
+            <div class="graphics-item">
+              <h3 class="graphic-title">Transporte: <%= medias.media_indice_transporte == 3 ? 'A' : medias.media_indice_transporte == 2 ? 'M' : 'B'%></h3>
+              <div class="graphics-bar">
+                <canvas id="graficoTransporte"></canvas>
+              </div>
+            </div>
+        </div>          
+      </section>
+
+     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Dados passados pelo servidor
+    const dados = <%- JSON.stringify(dados) %>;
+
+    // Processar os dados para os gráficos
+    const labels = dados.map(dado => {
+      const [ano, mes, dia] = dado.data_consumo.split('T')[0].split('-'); // Divide a data no formato AAAA-MM-DD
+      return `${dia}/${mes}`; // Retorna apenas o dia e o mês
+  });
+    const agua = dados.map(dado => dado.agua_litros);
+    const energia = dados.map(dado => dado.energia_kwh);
+    const transporte = dados.map(dado => dado.tipo_transporte); // Exemplo: pode ser ajustado conforme os dados
+    const reciclavel = dados.map(dado => dado.lixo_reciclavel_kg);
+
+    // Função para criar gráficos
+    function criarGrafico(id, valores, label, cor) {
+        new Chart(document.getElementById(id), {
+            type: 'bar',
+            data: {
+                labels: labels, // Datas
+                datasets: [{
+                    label: label,
+                    data: valores,
+                    backgroundColor: cor,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: label }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#000', font: { size: 10 } },
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#000', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+    }
+
+    // Criar gráficos com os dados dinâmicos
+    window.onload = function () {
+        criarGrafico('graficoAgua', agua, 'Consumo de Água (litros)', '#78c2ad');
+        criarGrafico('graficoEnergia', energia, 'Consumo de Energia (kWh)', '#f2b946');
+        criarGrafico('graficoTransporte', transporte, 'Transporte', '#f9f2e0');
+        criarGrafico('graficoLixo', reciclavel, 'Lixo Reciclável (kg)', '#c5facc');
+    };
+</script>
+      
+</body>
+</html>

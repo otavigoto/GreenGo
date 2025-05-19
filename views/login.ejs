@@ -1,0 +1,36 @@
+<%- include ('partials/header.ejs') %>
+<body class="main-content main-bg hidden-x">
+    <%- include ('partials/navbar.ejs') %>
+
+
+<section class="login-section">
+    <div class="grid">
+        <div class="input-grid">
+        <h1 class="titulo-login">Entrar</h1>
+        <p class="texto-criar-conta">Não tem uma conta? <strong><a href="/cadastro">Crie agora</a></strong></p>
+        <form action="/login" class="grid-input" method="post">
+          <div class="email-content">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="example@email.com">
+          </div>
+          <div class="password-content">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="suasenha">
+          </div>
+
+            <p class="forgot-password"><a href="#">Esqueceu sua senha?</a></p>
+            <button class="button-login" type="submit">Entrar</button>
+
+        </form>
+    </div>
+    <div class="img-grid" >
+        <h2 class="top-content">Suas escolhas geram impacto</h2>
+        <img src="img/Laptop_Physis.png">
+
+        <p class="bottom-content">Analise sua atividade dos ultimos sete dias por meio de graficos personalizados</p>
+    </div>
+    </div>
+</section>
+    
+</body>
+</html>
